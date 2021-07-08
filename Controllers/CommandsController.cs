@@ -13,18 +13,20 @@ namespace Commander.Controllers{
         {
             _repository = repository;
         }
-        //private readonly MockCommanderRepo _repository = new MockCommanderRepo();
         //Get api/commands
         [HttpGet]
         public ActionResult <IEnumerable<Command>> GetAllCommands(){
-            var commandItems = _repository.GetAppCommands();
+            var commandItems = _repository.GetAllCommands();
             return Ok(commandItems);
         }
         //Get api/commands/{id}
         [HttpGet("{id}")]
         public ActionResult <Command> GetCommandById(int id){
             var commandItem = _repository.GetCommandById(id);
-            return Ok(commandItem);
+            if (commandItem != null){
+                return Ok(commandItem);
+            }
+            return NotFound();
         }
     }
 }
